@@ -7,72 +7,54 @@ import java.util.regex.Pattern;
 public class FindText {
 
     ArrayList<String> text = new ArrayList<>();
-    OpenFile openUa = new OpenFile();
-    OpenFile openRu = new OpenFile();
-    OpenFile openEn = new OpenFile();
+
+    OpenFile openF = new OpenFile();
 
     public void findTxt() throws IOException {
         String endEn;
-        Scanner scannerUa = new Scanner(openUa.file("Ua.txt"));
-        Scanner scannerRu = new Scanner(openUa.file("Ru.txt"));
-        Scanner scannerEn = new Scanner(openEn.file("En.txt"));
+        Scanner scannerUa = new Scanner(openF.file("Ua.txt"));
+//        Scanner scannerRu = new Scanner(openF.file("Ru.txt"));
+//        Scanner scannerEn = new Scanner(openF.file("En.txt"));
+        FindREplace(scannerUa);
+    }
 
-        while (scannerUa.hasNext() && scannerEn.hasNext()) {
-            String stUa = (scannerUa.nextLine());
-            String stEn = (scannerEn.nextLine());
 
-            Pattern patern1 = Pattern.compile("[А-Я,І,Є,A-Z]\\.\\s[А-Я,A-Z,І,Є]\\.\\s"); //Поиск инициалов имени и отчества Ua
-            Matcher mat1 = patern1.matcher(stUa);
-            Pattern patern1En = Pattern.compile("[A-Z,А-Я]\\.\\s[A-Z,А-Я]\\.\\s"); //Поиск инициалов имени и отчества En
-            Matcher mat1En = patern1En.matcher(stEn);
+    public void FindREplace(Scanner scannerLg) {
+        while (scannerLg.hasNext()) {
+            String stTmp = (scannerLg.nextLine());
+            Pattern patern1 = Pattern.compile("\\s\\D*\\.\\s\\D\\."); //Поиск инициалов имени и отчества
+            Matcher mat1 = patern1.matcher(stTmp);
+            Pattern patern2 = Pattern.compile("\\s\\D\\.");//Поиск инициалов имени без отчества
+            Matcher mat2 = patern2.matcher(stTmp);
+            Pattern patern3 = Pattern.compile("\\.\\,\\s\\D+\\s\\D\\.\\s\\D\\.\\s"); //Поиск инициалов имени и отчества 2
+            Matcher mat3 = patern3.matcher(stTmp);
 
-            Pattern patern2 = Pattern.compile("[А-Я,A-Z,І,Є]\\.\\s");//Поиск инициалов имени без отчества Ua
-            Matcher mat2 = patern2.matcher(stUa);
-            Pattern patern2En = Pattern.compile("[A-Z,А-Я]\\.\\s");//Поиск инициалов имени без отчества En
-            Matcher mat2En = patern2En.matcher(stEn);
-            Pattern patern3En = Pattern.compile("[A-Z,А-Я][a-z,а-я]\\.\\s");//Поиск инициалов имени 2 знака без отчества En
-            Matcher mat3En = patern3En.matcher(stEn);
+            if (mat3.find()) {
+                String start = stTmp.substring(0, mat3.end());
+                String end = stTmp.substring(mat3.end());
+                String fin = "Несколько <strong>" + start + "</strong>" + end + "<br/>";
+                text.add(fin);
 
-            if (mat1.find()) {
-                String start = stUa.substring(0, mat1.end());
-                String endUa = stUa.substring(mat1.end());
-                if (mat1En.find()) {
-                    endEn = stEn.substring(mat1En.end());
-                    String fin = start + "[" + endUa + "]{" + endEn + "}";
-                    text.add(fin);
-                } else if (mat2En.find()) {
-                    endEn = stEn.substring(mat2En.end());
-                    String fin = start + "[" + endUa + "]{" + endEn + "}";
-                    text.add(fin);
-                } else if (mat3En.find()) {
-                    endEn = stEn.substring(mat3En.end());
-                    String fin = start + "[" + endUa + "]{" + endEn + "}";
-                    text.add(fin);
-                }
+            } else if (mat1.find()) {
+                String start = stTmp.substring(0, mat1.end());
+                String end = stTmp.substring(mat1.end());
+                String fin = "Имя Инициалы <strong>" + start + "</strong>" + end + "<br/>";
+                text.add(fin);
 
             } else if (mat2.find()) {
-                String start = stUa.substring(0, mat2.end());
-                String endUa = stUa.substring(mat2.end());
-                if (mat1En.find()) {
-                    endEn = stEn.substring(mat1En.end());
-                    String fin = start + "[" + endUa + "]{" + endEn + "}";
-                    text.add(fin);
-                } else if (mat2En.find()) {
-                    endEn = stEn.substring(mat2En.end());
-                    String fin = start + "[" + endUa + "]{" + endEn + "}";
-                    text.add(fin);
-                } else if (mat3En.find()) {
-                    endEn = stEn.substring(mat3En.end());
-                    String fin = start + "[" + endUa + "]{" + endEn + "}";
-                    text.add(fin);
-                }
+                String start = stTmp.substring(0, mat2.end());
+                String end = stTmp.substring(mat2.end());
+                String fin = "Одна буква <strong>" + start + "</strong>" + end + "<br/>";
+                text.add(fin);
+
             } else { //если что то не так
-                String fin = "!" + stUa + "}{" + stEn + "}";
+                String fin = "! " + stTmp + "<br/>";
                 text.add(fin);
             }
 
         }
     }
+
 
     @Override
     public String toString() {

@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="GradleLocalSettings">
-    <option name="modificationStamps">
-      <map>
-        <entry key="$USER_HOME$/Desktop/JetbrainsPatchKeygen" value="2860419182000" />
-        <entry key="$USER_HOME$/Downloads/JetbrainsPatchKeygen" value="2860419182000" />
-      </map>
-    </option>
-    <option name="externalProjectsViewState">
-      <projects_view />
-    </option>
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">

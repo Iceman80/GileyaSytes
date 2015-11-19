@@ -15,6 +15,10 @@ public class FindText {
         Scanner scannerUa = new Scanner(openF.file("Ua.txt"));
 //        Scanner scannerRu = new Scanner(openF.file("Ru.txt"));
 //        Scanner scannerEn = new Scanner(openF.file("En.txt"));
+        text.add("<em><strong>ЗМІСТ - СОДЕРЖАНИЕ - CONTENT </strong></em>\n" +
+                " [cut]<br />\n" +
+                " </div>\n" +
+                "<p align=\"center\"><em><strong>ЗМІСТ</strong></em></p>");
         FindREplace(scannerUa);
     }
 
@@ -28,6 +32,8 @@ public class FindText {
             Matcher mat2 = patern2.matcher(stTmp);
             Pattern patern3 = Pattern.compile("\\.\\,\\s\\D+\\s\\D*?\\.\\s\\D"); //Поиск инициалов имени и отчества 2
             Matcher mat3 = patern3.matcher(stTmp);
+            Pattern patern4 = Pattern.compile("^\\D{4,15}\\s\\D{4,15}$"); //Поиск названия темы
+            Matcher mat4 = patern4.matcher(stTmp);
 
             if (mat3.find()) {
                 String start = stTmp.substring(0, mat3.end());
@@ -47,8 +53,13 @@ public class FindText {
                 String fin = "<strong>" + start + "</strong>" + end + "<br/>";
                 text.add(fin);
 
+            } else if (mat4.find()) {
+                String start = stTmp.substring(0, mat4.end());
+                String fin = "      <p align=\"center\"><strong>" + start + "</strong></p>";
+                text.add(fin);
+
             } else { //если что то не так
-                String fin = "! " + stTmp + "<br/>";
+                String fin = "!!!! <strong> " + stTmp + "<br/>";
                 text.add(fin);
             }
 

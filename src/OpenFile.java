@@ -12,8 +12,7 @@ public class OpenFile {
         FileReader reader = null;
         if (retUa == JFileChooser.APPROVE_OPTION) {
             File fileUa = fileopen.getSelectedFile();
-            reader = new FileReader(fileUa.getAbsoluteFile());
-
+            reader = new FileReader(fileUa.getAbsolutePath());
         }
         return reader;
 

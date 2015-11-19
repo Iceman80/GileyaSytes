@@ -7,21 +7,21 @@ import java.util.regex.Pattern;
 public class FindText {
 
     ArrayList<String> text = new ArrayList<>();
-
     OpenFile openF = new OpenFile();
 
     public void findTxt() throws IOException {
-        String endEn;
-        Scanner scannerUa = new Scanner(openF.file("Ua.txt"));
-//        Scanner scannerRu = new Scanner(openF.file("Ru.txt"));
-//        Scanner scannerEn = new Scanner(openF.file("En.txt"));
         text.add("<em><strong>ЗМІСТ - СОДЕРЖАНИЕ - CONTENT </strong></em>\n" +
                 " [cut]<br />\n" +
                 " </div>\n" +
                 "<p align=\"center\"><em><strong>ЗМІСТ</strong></em></p>");
+        Scanner scannerUa = new Scanner(openF.file("Ua.txt"));
         FindREplace(scannerUa);
-    }
+        scannerUa = new Scanner(openF.file("Ru.txt"));
+        FindREplace(scannerUa);
+        scannerUa = new Scanner(openF.file("En.txt"));
+        FindREplace(scannerUa);
 
+    }
 
     public void FindREplace(Scanner scannerLg) {
         while (scannerLg.hasNext()) {

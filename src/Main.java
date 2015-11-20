@@ -1,6 +1,3 @@
-/**
- * Created by ice on 08.11.15.
- */
 import java.io.IOException;
 
 public class Main {

@@ -12,8 +12,7 @@ public class FindText {
     public void findTxt() throws IOException {
         text.add("<em><strong>ЗМІСТ - СОДЕРЖАНИЕ - CONTENT </strong></em>\n" +
                 " [cut]<br />\n" +
-                " </div>\n" +
-                "<p align=\"center\"><em><strong>ЗМІСТ</strong></em></p>");
+                " </div>");
 
         Scanner scannerUa = new Scanner(new File("/Users/ice/Desktop/Gileya/Ua.txt"));
         FindREplace(scannerUa);
@@ -55,14 +54,32 @@ public class FindText {
 
             } else if (mat4.find()) {
                 String start = stTmp.substring(0, mat4.end());
-                String fin = "      <p align=\"center\"><strong>" + start + "</strong></p>";
+                String fin = "\n      <p align=\"center\"><strong>" + start + "</strong></p>";
                 text.add(fin);
 
             } else { //если что то не так
-                String fin = "!!!! <strong> </strong>" + stTmp + "<br/>";
-                text.add(fin);
+                switch (stTmp) {
+                    case "ЗМІСТ": {
+                        String fin = "\n        <p align=\"center\"><em><strong>ЗМІСТ</strong></em></p>";
+                        text.add(fin);
+                    }
+                    break;
+                    case "СОДЕРЖАНИЕ": {
+                        String fin = "\n        <p align=\"center\"><em><strong>СОДЕРЖАНИЕ</strong></em></p>";
+                        text.add(fin);
+                    }
+                    break;
+                    case "CONTENT": {
+                        String fin = "\n        <p align=\"center\"><em><strong>CONTENT</strong></em></p>";
+                        text.add(fin);
+                    }
+                    break;
+                    default: {
+                        String fin = "!!!! <strong>" + stTmp + " </strong> <br/>";
+                        text.add(fin);
+                    }
+                }
             }
-
         }
     }
 

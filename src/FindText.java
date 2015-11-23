@@ -15,14 +15,14 @@ public class FindText {
                 " </div>");
 
         Scanner scannerUa = new Scanner(new File("/Users/ice/Desktop/Gileya/Ua.txt"));
-        FindREplace(scannerUa);
+        FindReplace(scannerUa);
         scannerUa = new Scanner(new File("/Users/ice/Desktop/Gileya/Ru.txt"));
-        FindREplace(scannerUa);
+        FindReplace(scannerUa);
         scannerUa = new Scanner(new File("/Users/ice/Desktop/Gileya/En.txt"));
-        FindREplace(scannerUa);
+        FindReplace(scannerUa);
     }
 
-    public void FindREplace(Scanner scannerLg) {
+    public void FindReplace(Scanner scannerLg) {
         while (scannerLg.hasNext()) {
             String stTmp = (scannerLg.nextLine());
             Pattern patern = Pattern.compile("^\\D{3,19}\\s\\D{0,3}\\.\\s\\D{0,3}\\.\\s|^\\D{4,15}\\s\\D{0,7}\\.\\s|\\.\\,\\s\\D{3,19}\\s\\D{0,3}\\.\\s\\D{0,3}\\.\\s"); //Поиск по фамилии имени и отчеству | Поиск по фамилии и имени | Поиск по фамилии имени и отчеству повторы

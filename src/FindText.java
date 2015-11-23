@@ -25,59 +25,29 @@ public class FindText {
     public void FindREplace(Scanner scannerLg) {
         while (scannerLg.hasNext()) {
             String stTmp = (scannerLg.nextLine());
-            Pattern patern1 = Pattern.compile("^\\D{3,19}\\s\\D{0,3}\\.\\s\\D{0,3}\\.\\s"); //Поиск инициалов имени и отчества
-            Matcher mat1 = patern1.matcher(stTmp);
-            Pattern patern2 = Pattern.compile("^\\D{4,15}\\s\\D{0,7}\\.\\s");//Поиск инициалов имени без отчества
-            Matcher mat2 = patern2.matcher(stTmp);
-            Pattern patern3 = Pattern.compile("\\.\\,\\s\\D{3,19}\\s\\D{0,3}\\.\\s\\D{0,3}\\.\\s"); //Поиск инициалов имени и отчества 2
-            Matcher mat3 = patern3.matcher(stTmp);
-            Pattern patern4 = Pattern.compile("^\\D{4,15}\\s\\D{4,15}$"); //Поиск названия темы
-            Matcher mat4 = patern4.matcher(stTmp);
+            Pattern patern = Pattern.compile("^\\D{3,19}\\s\\D{0,3}\\.\\s\\D{0,3}\\.\\s|^\\D{4,15}\\s\\D{0,7}\\.\\s|\\.\\,\\s\\D{3,19}\\s\\D{0,3}\\.\\s\\D{0,3}\\.\\s"); //Поиск по фамилии имени и отчеству | Поиск по фамилии и имени | Поиск по фамилии имени и отчеству повторы
+            Matcher mat = patern.matcher(stTmp);
+            Pattern paternT = Pattern.compile("^\\D{4,15}\\s\\D{4,15}$"); //Поиск названия темы
+            Matcher matT = paternT.matcher(stTmp);
 
-            if (mat3.find()) {
-                String start = stTmp.substring(0, mat3.end());
-                String end = stTmp.substring(mat3.end());
+            if (mat.find()) {
+                String start = stTmp.substring(0, mat.end());
+                String end = stTmp.substring(mat.end());
                 String fin = "<strong>" + start + "</strong>" + end + "<br/>";
                 text.add(fin);
 
-            } else if (mat1.find()) {
-                String start = stTmp.substring(0, mat1.end());
-                String end = stTmp.substring(mat1.end());
-                String fin = "<strong>" + start + "</strong>" + end + "<br/>";
-                text.add(fin);
-
-            } else if (mat2.find()) {
-                String start = stTmp.substring(0, mat2.end());
-                String end = stTmp.substring(mat2.end());
-                String fin = "<strong>" + start + "</strong>" + end + "<br/>";
-                text.add(fin);
-
-            } else if (mat4.find()) {
-                String start = stTmp.substring(0, mat4.end());
+            } else if (matT.find()) {
+                String start = stTmp.substring(0, matT.end());
                 String fin = "\n      <p align=\"center\"><strong>" + start + "</strong></p>";
                 text.add(fin);
 
             } else { //если что то не так
-                switch (stTmp) {
-                    case "ЗМІСТ": {
-                        String fin = "\n        <p align=\"center\"><em><strong>ЗМІСТ</strong></em></p>";
-                        text.add(fin);
-                    }
-                    break;
-                    case "СОДЕРЖАНИЕ": {
-                        String fin = "\n        <p align=\"center\"><em><strong>СОДЕРЖАНИЕ</strong></em></p>";
-                        text.add(fin);
-                    }
-                    break;
-                    case "CONTENT": {
-                        String fin = "\n        <p align=\"center\"><em><strong>CONTENT</strong></em></p>";
-                        text.add(fin);
-                    }
-                    break;
-                    default: {
-                        String fin = "!!!! <strong>" + stTmp + " </strong> <br/>";
-                        text.add(fin);
-                    }
+                if (stTmp.equals("ЗМІСТ") || stTmp.equals("СОДЕРЖАНИЕ") || stTmp.equals("CONTENT")) {
+                    String fin = "\n        <p align=\"center\"><em><strong>" + stTmp + "</strong></em></p>";
+                    text.add(fin);
+                } else {
+                    String fin = "!!!! <strong>" + stTmp + " </strong> <br/>";
+                    text.add(fin);
                 }
             }
         }

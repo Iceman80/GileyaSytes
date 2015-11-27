@@ -25,9 +25,9 @@ public class FindText {
     public void FindReplace(Scanner scannerLg) {
         while (scannerLg.hasNext()) {
             String stTmp = (scannerLg.nextLine());
-            Pattern patern = Pattern.compile("\\.,\\s\\D{3,19}\\s\\D{0,3}\\.\\s\\D{0,3}\\.\\s|^\\D{3,19}\\s\\D{1,3}\\.\\s\\D{1,3}\\.\\s"); //Поиск по фамилии имени и отчеству | Поиск по фамилии и имени | Поиск по фамилии имени и отчеству повторы
+            Pattern patern = Pattern.compile("\\.,\\s[\\D{3,19}^\\s]\\s[\\D{0,7}^\\s]\\.\\s[\\D{0,7}^\\s]\\.\\s|[\\D{3,19}^\\s]\\s[\\D{0,7}^\\s]\\.\\s[\\D{0,7}^\\s]\\.\\s"); //Поиск по фамилии имени и отчеству | Поиск по фамилии и имени | Поиск по фамилии имени и отчеству повторы
             Matcher mat = patern.matcher(stTmp);
-            Pattern paternDouble = Pattern.compile("\\D{4,15}\\s\\D{0,9}\\.\\s"); // По Поиск по фамилии и имени без отчества
+            Pattern paternDouble = Pattern.compile("[\\D{3,19}^\\s]\\s\\D{0,5}\\.\\s"); // По Поиск по фамилии и имени без отчества
             Matcher matD = paternDouble.matcher(stTmp);
             Pattern paternT = Pattern.compile("^\\D{4,15}\\s\\D{4,15}$"); //Поиск названия темы
             Matcher matT = paternT.matcher(stTmp);
